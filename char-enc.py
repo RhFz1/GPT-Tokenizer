@@ -5,7 +5,7 @@ load_dotenv()
 
 # Importing data paths
 input_text_path = os.path.join(os.environ.get("DATA_PATH"), 'data.txt')
-tokenized_text_path = os.path.join(os.environ.get("DATA_PATH"), 'encodings.txt')
+tokenized_text_path = os.path.join(os.environ.get("DATA_PATH"), 'tokenized.txt')
 
 # Reading the text file.
 if not os.path.exists(input_text_path):
