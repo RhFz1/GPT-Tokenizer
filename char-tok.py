@@ -28,5 +28,3 @@ if not os.path.exists(tokenized_text_path):
 
 decoder = lambda s : ''.join(chr(int(c)) for c in s.split(','))
 print(decoder(tokenized_text))
-
-

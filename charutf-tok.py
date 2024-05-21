@@ -22,5 +22,3 @@ tokenized_text = text.encode('utf-8')
 # Decoding the encoded numbers
 
 print(tokenized_text.decode('utf-8'))
-
-
