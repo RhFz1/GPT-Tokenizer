@@ -26,8 +26,6 @@ file.close()
 tokens = text.encode('utf-8')
 tokens = list(map(int, tokens))
 
-print(f"Total tokens: {len(tokens)}")
-
 # this function will take a list of tokens and return a dictionary with the counts of each token pair
 def get_stats(tokens: List) -> Dict:
     counts = {}
