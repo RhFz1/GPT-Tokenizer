@@ -9,7 +9,11 @@ load_dotenv()
 vocab_size = 384
 native_vocab = 256
 num_merges = vocab_size - native_vocab
-merges = {}
+
+if os.path.isfile(os.environ.get("DATA_PATH") + '/merges_dict.txt'):
+    from construct_merge import merges
+else:
+    merges = {}
 
 # Importing data paths
 input_text_path = os.environ.get("DATA_PATH") + '/input.txt'
@@ -75,9 +79,3 @@ def decode(ids: List) -> str:
     text = tokens.decode('utf-8', errors='replace')
 
     return text
-
-ids = encode(tokens, num_merges)
-
-with open(os.environ.get('DATA_PATH') + '/merges_dict.txt', 'w') as file:
-    for k, v in merges.items():
-        file.write(f"{k}:{v}\n")
