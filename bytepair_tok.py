@@ -1,4 +1,5 @@
 import os 
+import json
 from dotenv import load_dotenv
 from typing import List, Dict, Tuple
 
@@ -8,9 +9,10 @@ load_dotenv()
 vocab_size = 384
 native_vocab = 256
 num_merges = vocab_size - native_vocab
+merges = {}
 
 # Importing data paths
-input_text_path = os.environ.get("DATA_PATH")
+input_text_path = os.environ.get("DATA_PATH") + '/input.txt'
 
 text = ""
 with open(input_text_path, 'r') as file:
@@ -47,8 +49,6 @@ def merge(ids: List, pair: Tuple, idx: int) -> List:
 
 # this is the function where we will be compressing the tokens
 def encode(ids: List, num_merges: int) -> Tuple[List, Dict]:
-    
-    merges = {}
 
     for i in range(num_merges):
         counts = get_stats(ids)
@@ -61,9 +61,9 @@ def encode(ids: List, num_merges: int) -> Tuple[List, Dict]:
     print(f"ids length: {len(ids)}")
     print(f"Compression rate: {len(tokens) / len(ids)}")
         
-    return ids, merges
+    return ids
 
-def decode(ids: List, merges: Dict) -> str:
+def decode(ids: List) -> str:
 
     vocab = {idx : bytes([idx]) for idx in range(native_vocab)}
 
@@ -76,5 +76,8 @@ def decode(ids: List, merges: Dict) -> str:
 
     return text
 
-ids, merges = encode(tokens, num_merges)
-print(decode(ids, merges)[:500])
+ids = encode(tokens, num_merges)
+
+with open(os.environ.get('DATA_PATH') + '/merges_dict.txt', 'w') as file:
+    for k, v in merges.items():
+        file.write(f"{k}:{v}\n")
