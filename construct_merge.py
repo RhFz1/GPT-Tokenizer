@@ -11,7 +11,7 @@ merges = {}
 with open(data_path, 'r') as file:
     for line in file:
         pair, idx = line.split(':')
-        pair = tuple(map(int, pair.split(',')))
+        pair = tuple(map(int, pair[1:-1].split(',')))
         idx = int(idx)
         merges[pair] = idx
 file.close()
